@@ -7,7 +7,7 @@ import "./styles.css";
 import { useAuth } from '../../AuthContext.jsx';
 
 
-function Dashboard() {
+const Dashboard = () => {
     const [activeTab, setActiveTab] = useState("users");
     const { logout } = useAuth();
 
@@ -15,29 +15,20 @@ function Dashboard() {
         logout();
     };
 
-    const renderComponent = () => {
-        switch (activeTab) {
-            case "users":
-                return <Users />;
-            case "posts":
-                return <Posts />;
-            case "notifications":
-                return <Notifications />;
-            default:
-                return <Users />;
-        }
-    };
-
     return (
-        <div>
-            <Navbar
-                activeTab={activeTab}
-                setActiveTab={setActiveTab}
-                handleLogout={handleLogout}
+        <div className="dashboard-container">
+            <Navbar 
+                activeTab={activeTab} 
+                setActiveTab={setActiveTab} 
+                handleLogout={handleLogout} 
             />
-            {renderComponent()}
+            <div className="content-container">
+                {activeTab === "users" && <Users />}
+                {activeTab === "posts" && <Posts />}
+                {activeTab === "notifications" && <Notifications />}
+            </div>
         </div>
     );
-}
+};
 
 export default Dashboard;
